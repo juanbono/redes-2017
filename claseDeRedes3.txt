@@ -1,0 +1,307 @@
+
+Clase de 12/5/17
+
+Formato de Datagrama IPv4
+
+Longitud de cabecera tipica = 20 bytes.
+
+Servicio de TCP: Best Effort
+
+Cuanto por encima con TCP?
+* 20 bytes de TCP
+* 20 bytes de IP
+= 40 bytes + capa superior de aplicaciones.
+
+TTL: Para que no quede eternamente un paquete dando vuelta.
+
+COdigo de la capa superior: 
+
+
+
+# Rutado Intra-SA
+* Tambien conocidos como protocolos de pasarela interior.
+* Los protocolos de rutado Intra-SA mas corrientes:
+  - RIP: Protocolo de Informacion de Rutado.
+  - OSPF: Open Shortest Path First
+  - IGRP: Protocolo de Rutado de Pasarela Interior (Propiedad de Cisco)
+
+# Rutado en Internet
+* El internet Global esta compuesto por Sistemas Autonomos(SA) 
+interconectados entre si:
+	- SA de stub: pequeña formacion: una conexcion con otros SA
+	- SA multihospedado
+	- SA de transito
+
+# RIP (Protocolo de Informacion de Rutado)
+* Algoritmos de vector de distancias (Bellman-Ford)
+* Incluido en BSD-UNIX Distribution en 1982.
+* Medida de distancia: Numero de saltos (max = 15 saltos)
+* Vectores de distancias: intercambiados entre los vecinos cada 30 seg, 
+a traves de la respuesta del mensaje (tambien conocido como anuncio)
+* cada anuncio: lista de hasta 25 destinos 25 redes de destinos con SA
+
+Nota: La metrica que usa este sistema son los saltos. Es decir que es 
+una metrica sencilla y no configurable para el administrador.
+
+# OSPF(camino abierto mas corto)
+* "abierto": disponible publicamente
+* Open Shortest Path First
+* Enrutamiento jerarquico de pasarela interior.
+* Utiliza un algoritmo de estado de enlaces:
+	- distribucion de paquetes del estado de enlaces.
+	- Mapa de topologia en cada nodo
+	- computo de la ruta usando dijkstra
+
+#Avances del OSPF
+* Seguridad: todos los mensajes de OSPF estan autentificados
+* multiples caminos con el mismo coste permitdos (RIP solo permite 1)
+* Para cada enlace, varias metricas de coste para distintos TOS.
+  (Por ejemplo, el coste del enlace satelite "rebajado" para un mayor 
+rendimiento; alto para tiempo real
+* soporte integrado uni y multidifusion
+  - La multidifusion OSPF (MOSPF) usa la misma base de datos topologica 
+que OSPF.
+* OSPF jerarquico en grandes dominios
+
+TOS = Type of Service
+
+# Rutado inter-SA en Internet: BGP
+* BGP (Protocolo de Pasarela de Frontera): el standard de facto.
+* protocolo de vector de rutas:
+  - parecido al protocolo de vector de distancias (BF)
+
+# Esquema de la arquitectura de un router
+2 funciones principales del router:
+- ejecutar algoritmos/protocolos de rutado (RIP, OSPF, BGP)
+- conmutar datagramas desde enlaces de entrada hacia los de salida.
+
+# Componentes basicos:
+Puerto de Entrada -> Entramado de Conmutacion -> Puerto de Salida
+Procesador de Rutado.
+
+# IPv6
+* motivacion inicial: el espacio de direcciones de 32 bits asignado por 
+completo para 2008.
+* motivaciones adicionales:
+- el formato de cabecera acelera el procesamiento/encaminamiento.
+- cambios de cabera para facilitar la calidad de servicio
+- Nueva direccion "anycast" : ruta hacia la mejor de varias replicas de 
+los servidores.
+
+* formato de datagrama de IPv6_
+- cabecera de 40 bytes estabilizada
+- no permite la fragmentacion
+
+# Transicion del IPv4 al IPv6
+* No se pueden mejorar todos los routers a la vez:
+- Sin "dias señalados"
+
+
+Importante: 2 formas (entra parcial):
+pila dual: tiene ambas y va traduciendo
+tunelizacion: el ipv6
+
+# Capitulo 5: Protocolo de la capa de enlace
+Nuestras metdas:
+*Entender los principios que hay tras los servicios de protocolo de la 
+  capa de enlaces:
+  - detectar errores, corregirlos
+  - compartir un canal de multidifucsion: acceso multiple
+  - protocolo de la capa de direccionamiento (capa 2, plano).
+  - transferencia fiable de datos, control de flujo: conseguido.
+* Instanciacion e implementacion de varias tecnologias de protocolo de 
+la capa de enlace
+
+Para corregir un error en al trasmision se carga mas el canal de 
+informacion mandando datos redundantes.
+
+conmutadores:
+- Switch (capa 3)
+- Router (capa 2)
+- Hub (capa 1)
+
+SIEMPRE HAY PREGUNTAS DE CONMUTADORES EN LOS PARCIALES!!!!
+
+# Capa de enlace: contexto:
+* el datagrama se transfiere pro diferentes protocolos de enlace de 
+datos a traves de distintos enalces
+
+* cada protocolo ofrece diferentes servicios
+
+# Sservicios de capa de enlace
+* Enmarcacin, de acceso de enlace:
+- Encapsular el datagrama en un marco, añadir cabecera, trailer
+- acceso a canales si se comparte el medio
+- 'direcciones fisicas' se usan en las cabeceras de los marcos para 
+identificar la fuente y los destinatarios. (Solo la IEEE le llama MAC a 
+esta direccion fisica).
+Direccion fisica => Siempre Capa 2
+Direccion Logica => Siempre Capa 3
+  - diferente de la direccion logica IP
+
+* Entrega fiable entre nodos adyacentes:
+- similar a la capa 4 con tcp
+- usado rara vez en errores d eenlace de bits leves (fibra, algunos 
+pares torcidos)
+- enlaces sin cable: tasa de eeror elevada
+
+# Protocolos y enlaces de acceso multiple
+2 tipos de "enlaces":
+* Punto a punto:
+  - PPP para acceso dial-up
+  - Enlace punto a punto entre Ethernet Switch y host.
+
+* De difusion (cable compartido o medio):
+  - Ethernet tradicional
+  - Upstream HFC
+
+# Protocolo de acceso multiple: 
+* canal de difusion simple compartido.
+* dos o mas transmisiones simultaneas por nodos: interferencia
+  - solo un nodo puede enviarse al mismo tiempo con exito.
+
+# MAC (media access control): clasificacion
+
+Tres clases de difusion
+* Particionamiento de canal
+- Divide el canal en "porciones" mas pequeñas (time slots, 
+frecuencia,codigo)
+- asignar porcion al nodo para uso exclusivo
+
+* Acceso Aleatorio (Ethernet)
+- Canal sin division, permite colisiones
+- "Recuperarse" de colisiones
+
+* "De toma por turnos"
+- Acceso compartido bien coordinado para evitar colisiones.
+
+# Protocolos MAC de particionamiento de canal: TDMA
+TDMA: acceso multiple por division de tiempo
+- acceso de canal en "circulos"
+- cada estacion establece la longitud de la franja
+
+* FDMA (acceso multiple por division de frecuencia)
+
+*CDMA (acceso multiple por division de codigo)
+
+# Protocolos de acceso aleatorio
+* cuando el nodo esta empaquetado para ser transmitido:
+		
+
+ALOHA con franjas
+
+ALOHA
+
+CSMA = Carrier Sense Multiple Access (escuchar el canal para ver si 
+puedo o no puedo transmitir)
+
+CSMA/CD: Collision Detect (aleatorio)
+
+CSMA/CA: Collision Avoidance (por turnos)
+
+# Protocolo de toma de turnos MAC
+Sonseo
+Paso de token
+
+# Direcciones LAN y ARP
+* 32 bit direccion IP
+- direccion de las capas de red
+- Utilizado para unir el datagrama con su destino red IP (volver a la 
+definicion de red IP)
+
+* Direccion LAN (o MAC, fisica o Ethernet)
+* Utilizada para unir el datagrama desde una interfaz a otra conectada 
+fisicamente (misma red)
+* direccion MAC 48 bit IEEE 802.X (para la mayoria de los LAN) encencido 
+en el adaptador ROM.
+
+# Direccion LAN
+* Asignacion de la direccion MAC administrada por la IEEE
+* El fabricante compra una porcion de direcciones MACcon espacio (para 
+asegurarse la singularidad)
+* Analogia: 
+(a) direccion MAC: como el numero de seguridad social
+(b) direccion IP: como el codigo postal.
+
+* Direccion del piso MAC => portabilidad
+- puede mover la tarjeta LAN de una tarjeta LAN a otra.
+
+* Direcciones IP jerarquicas NO portatiles:
+- dependen de la red IP al que el nodo esta sujeto.
+
+# ARP: Protocolo de resolucion de direcciones
+* Cada nodo IP (Host, Router) en LAN tiene una tabla ARP: IP -> MAC
+
+* Traduccion de direcciones para algunos nodos LAN
+<Direccion IP, DIreccion MAC; TTL>
+* TTL (tiempo de vida):
+tiempo tras el cual el registro de direccion se olvida (normalmente 20 
+minutos).
+
+# Estructura del marco Ethernet
+
+* Preambulo: 7 bytes con el patron 10101010 seguido de un byte con 
+patron 10101011
+
+* usado para sincronizar las tasas del reloj del receptor y del emisor.
+
+
+* Direcciones: 6 bytes
+- Si el adaptador recibe un marco con una direccion de destino unida, o 
+con una direccion de difusion (por ejemplo, el paquete ARP), pasa datos 
+en el marco hacia el protocolo de capa de red
+- de otra forma, el adaptador descarta el marco.
+
+* Tipo: indica el protocolo de capa mas alto, la mayoria de IP, pero 
+puede ser Novell IPX o el AppleTalk.
+
+* CRC: Comprobado en el receptor, se peude detectar error.
+       Control mas fuerte que el control de paridad (checksum),
+       Lleva mas tiempo. Es el ultimo PDU antes de ir a lo "fisico"
+       Por lo que debe maximizar el cuidado de la trama.
+
+
+# Un servicio sin conexion no fiable:
+* Sin conexion: 
+
+* No fiable:
+
+# Algoritmo Ehternet CSMA/CD
+Backoff exponencial
+
+# Interconectar segmentos LAN (no es lo mismo que el pdu de capa 4)
+* Hubs
+* bridges
+* switches
+
+(fijarse en el libro hubs, bridges, switches)
+
+# Bridges: aislar del trafico
+* la instalacion de bridge divide el LAN en segmentos LAN
+* paquetes bridges de filtrado:
+ - marcos con el mismo segmento LAN no se remiten a otros segmentos LAN
+ - los segmentos se separan en dominios de colision.
+
+Los conmutadores de capa 2 van a dividir los dominios de colision
+
+- En un switch con 4 bocas tengo 4 segmentos.
+- En un hub con 4 bocas tengo 1 segmento. El hub siempre hace broadcast.
+
+Los routers que son conmutadores de capa 3 dividen los dominios de 
+broadcast.
+
+Dominios:
+ - de colision (capa 2) 
+ - de difusion o broadcast (capa 3, routers)
+
+
+# Routers vs Bridges (ver en el libro)
++ La operacion del bridge es mas sencilla y require menos procesamiento 
+de paquete.
+
++ Las tablas de bridge tienen autoaprendizaje.
+
+- Todo el trafico se limita al arbol......
+
+
+

@@ -1,0 +1,45 @@
+
+
+Escaneo de puertos -> Para saber el estado de los puertos
+
+Estado de los puertos
+ * Abierto -> Listo para recibir conexiones. Hay una aplicacion detras.
+ * Cerrado -> No hay aplicacion detras esperando conexion.
+ * Filtrado -> Hay un firewall impidiendonos escanear el estado del puerto.
+
+Puertos:
+
+0-1023 : Reservados para aplicaciones de servidores
+
+1024-49151 : Aplicaciones varias
+
+49152-65535 : Clientes SO
+
+Para el tp:
+
+FTP: 192.168.1.41
+
+user: redes0x
+pass: redes0x
+
+Cifrar
+
+simetrico: la misma clave para cifrar y descifrar
+
+asimetrico: par de claves: publica y privada.
+
+A tiene 2 claves KaPriv y KaPub.
+B tiene 2 claves KbPriv y KbPub.
+
+B para enviarle un mensaje a A usa KaPub para encriptar el mensaje m.
+A recibe el mensaje encriptado de B y utiliza KaPriv para desencriptarla.
+
+Con KaPub puedo desencriptar algo encriptado con KaPriv
+y con KaPriv puedo desencriptar algo encriptado con KaPub
+
+Para autenticar: Encripto con KPriv.
+Para enviar mensaje encriptado (no autenticacion): Encripto con KPub
+
+
+SSL:
+

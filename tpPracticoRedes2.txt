@@ -1,0 +1,153 @@
+
+
+Enrutamiento IP:
+
+- Aplicacion
+- Transporte
+- Red        <- IP
+- Enlace
+- Fisica
+
+
+IP - 4 bytes (Identificador de Red)
+
+Una parte identifica red y otra host
+
+0-255 , 0-255 , 0-255, 0-255
+
+Si tengo un DHCP y en el DHCP otorga la ip dependiendo de la mac,no importa
+el sistema operativo desde el que bootea sino que siempre da la misma IP.
+
+Clases
+
+A 0-126
+B 128-191
+C 192-223
+D 224-
+
+El identificador de red siempre empieza con 0. Es el primer host.
+
+Por ejemplo en clase C es 192.7.8.0 por ejemplo
+
+
+10.7.9.6 (clase A) Identificador de red:
+
+broadcast: tomamos el ultimo en vez del primero.
+Desde el cual se puede transmitir un mensaje a todos los miembro3s (e:157 r:2 l:12 b:46)
+
+
+
+Recent Files:s de esa red.
+
+
+Por ejemplo para 192.168.7.9:
+ - Identificador de red: 192.168.7.0
+ - Broadcast: 192.168.7.255
+Le envio un mensaje a la direccion de broadcast y con eso le envio ese mensaje a todos los miembros de la red.
+
+Mascara de red:
+Sirve para marcar en una red quienes son red y quienes hosts.
+
+ejemplos:
+192.6.9.7
+Los 3 primeros bytes pertenecen a la red debido a que es de clase C.
+
+Mascara de red:
+255.255.255.0
+(marca con 255 lo que es de red y con 0 los de hosts)
+
+Paso a binario 8.0.0.2
+00001000 00000000 00000000 00000010
+
+bin(IP) AND bin(MascaraRed) = Identificador de red
+
+
+
+--
+173.7.9.6
+
+Id de red: 173.7.9.0
+
+Mascara de red: 255.255.0.0
+
+Default Gateway: Ip que voy a usar para salir de mi red a otra red.
+
+La direccion de default gateway se elige entre las disponibles (256 - 2 = 254).
+Pero usualmente se elige la 1, por ejemplo 192.6.5.1
+
+Para default gateway se usa usualmente el primer host util disponible.
+--
+Mascara de subred:
+
+
+Supongamos que somos un ISP, le vamos a dar internet a muchas personas, empresas, etc.
+
+Ese ISP cuenta con un pool de IPs.
+Hay 2 empresas A y B, a las que le tengo que asignar 20 direccions a A y 120 a B.
+Como cuento con el pool 10.0.0.0
+Las direcciones de A y B van a estar en la misma red, y eso es malo porque la idea es que esten separadas.
+Por eso existe el concepto de subred.
+
+Es decir, sacrifico cantidad de hosts para ofrecer mas redes.
+_ [--------] _ _
+La primer subred va a ser cuando tenga todos los bits en 0 y la otra cuando tenga todos los bits en 1. (00000000 y 11111111)
+
+Cuando hago subred cambia la mascara de red, ya que como se pide prestado un byte la mascara de clase A pasa de ser 255.0.0.0 a ser 255.255.0.0 donde el segundo par de 255 es el de la subred. Entocnes a partir de la IP puedo identificar la clase y con la mascara de subred puedo saber si se hizo subneteo (tiene una mascara de red distinta a 255.0.0.0)
+
+255.255.128 = pedi 8 + 3 bits si la original es de clase A (255.0.0.0)
+
+8 subredes pidiendo 3 bits prestados partiendo de clase C.
+Cada subred tiene un identificador propio, el primer host util.
+Cada subred tambien tiene un broadcast.
+
+---
+De una clase C se que el ultimo byte esta destinado a hosts.
+
+Si nos sobran podemos armar subredes con los que nos sobran
+Si pido el bit mas significativo (1 _ _ _ _) puedo crear 1 o 2 subredes.
+Si pido el primer y  segundo bit puedo crear 4 subredes.
+SI en una clase C hacemos 7 subredes nos quedamos sin IP para hosts.
+Entonces el limite posta de la clase C son 6 subredes, donde se pueden dar 2 IPs (sacando las 2 que ya vienen fijas(identificador y broadcast))
+
+-- Ejemplo practico:
+
+
+Tengo la IP 192.6.8.65 y la mascara 255.255.255.192.
+ - Es clase C
+ - Cree subredes porque pedi prestado.
+ - Cuantos pedi prestados? 2 , el de 2^7 y el de 2^6.
+ - cuantas subredes puedo crear? 4 (la permutacion de los 2 bits)
+ - Primer identificador de subred: 192.6.8.0
+ - Segundo identificador de subred: 192.6.8.64
+ - Tercer identificador de subred: 192.6.8.128
+ - Cuarto identificador de subred: 192.6.8.192
+
+A donde pertenece la IP dada??? A la segunda subred :D porque esta en el intervalo 64-127 (segunda subred).
+
+Mascara de subred:
+ Me sirve para identificar la parte de red y hosts pero en una subred.
+
+Como se diferencia con la mascara de red? Porque no se corresponde con la clase de la IP. (Es decir si tengo una IP clase A y me dan una mascara 255.255.0.0 y en realidad deberia ser 255.0.0.0).
+
+La IP publica pertenece a internet, puedo llegar a otra ip publica en internet.
+La IP privada viene asociada a LAN, pero podria ser otra, son ips locales (uso interno). Los routers no direccionan ips privadas solo publicas.
+
+
+De Cada clase de IPs tenemos un pool de direcciones reservadas para uso privado (IPs privadas).
+
+En IPs publicas no se pueden repetir las IPs pero en diferentes redes privadas, se pueden repetir, siempre y cuando no se repita en la misma.
+
+
+A = 
+B = 
+C = 
+
+
+NAT: se usa para pasra desde una lan a una wan (para conectarse a internet)
+
+DNAT: Es entrar a la conf del router y a todas las peticiones que lleguen desde internet al puerto 21 (ftp) mandalas a la direccion 192.168.1.5.
+
+DNS Dinamico: Cuando quiero asociar un nombre a una IP pero la IP es dinamica, entonces, lo que se hace es checkear si la IP actual asignada a un nombre cambio y si cambio la actualiza.
+
+Desde 127.0.0.0 a 127.255.255.255 no se asigna porque estan para la placa de red.
+La 127.0.0.1 responde la placa de red 

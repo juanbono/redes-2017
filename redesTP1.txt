@@ -1,0 +1,147 @@
+
+Capa de aplicacion:
+
+2 tipos de aplicaciones
+- p2p
+- cliente/servidor
+
+- Cliente Servidor
+
+  Servidor <-> Cliente
+
+- Peer to Peer
+
+En el practico de hoy trabajaremos con aplicaciones cliente servidor.
+
+Protocolos cliente/servidor:
+
+HTTP - SMTP - FTP - telnet
+
+
+Capa de Transporte:
+
+Protocolos: TCP - UDP
+
+TCP - Orientado a conexion.
+
+UDP - No orientado a la conexion.
+
+Puertos:
+
+80 - HTTP   - TCP
+21 - FTP    - ?
+20 - FTP    - ?
+25 - SMTP   - TCP
+22 - SSH    - TCP
+23 - TELNET - TCP
+
+En TCP tenemos las 3 vias de conexion
+Serv   Cliente
+|      |
+|     /| S y N (en lo qeu envio estan las direcciones del cliente)
+|    / |
+|   /  |
+|  /   |
+| /    |
+|/     |
+|\     |
+| \    |
+|  \   |
+|   \  |
+|    \ |
+|     \|ACK1 y SyN1 (aca estan las direcciones del servidor)
+|     /|
+|    / |
+|   /  |
+|  /   |
+| /    |
+|/     |ACK
+
+
+DNS: Domain Name System
+
+Traduce dominios en IP.
+
+Protocolo IP: Capa de Red
+
+Ejemplo: 192.168.1.7
+
+Host: Cualquier equipo de red (PC, servidor, etc)
+
+IP: Identificador dentro de la red a nivel capa de Red.
+
+DHCP: Otorga direcciones IP.
+
+Formas de identificar la IP de mi equipo:
+- ipconfig (puerta de enlace (default gateway) y DNS.
+- ifconfig (en el linux viejaa)
+
+
+Wireshark:
+Monitorea placa de red -> Modo promiscuo o no.
+Modo promiscuo: analizo todos los paquetes que pasan por mi placa de red.
+
+Sin modo promiscuo: Solo analiza los paquetes en el cual yo soy el origen o destino.
+
+Utilidad del wireshark: Me permite ver la informacion del paquete a nivel capa.
+De ese paquete: Si trabaja con TCP, UDP. y dependiendo de la capa ofrece diferentes cosas.
+
+
+Entre la info del paquete:
+Hay una info que dice protocolo ahi buscamos DNS.
+Nos van a aparecer todas las capas.
+Hay que documentar las distintas capas.
+
+Mencionar el tipo de transporte.
+
+C) Ver un HTTP y ver que tipo de mensaje HTTP es.
+
+2- Abrir wireshark.
+Conectarse por telnet a la pc del compas (la ip se la pedimos al compas)
+Credenciales del telnet server we
+Usuario: redes
+Password: Redes1320
+
+Para verificar we hay que escribir hostname en la terminal desde la que nos conectamos por telnet y deberia decirnos el hostname de la pc del compas
+
+a)
+Los 3 primeros paquetes: DNS y los otros 2(
+DNS, TCP, TCP, TCP, TELNET, ...., TELNET
+
+b) (capa de transporte para el pto de origen y destino de los paquetes TELNET, puerto 23 supuestamente)
+
+c)Se refiere al TCP de telnet (follow stream en inglish we). Abre pantalla nueva y me dice la respuesta de la pregunta.
+
+3) Para conectarme a la cmd we:
+ftp <direccion>
+
+Servidor FTP: 192.168.1.72
+Usuario: redes<nroPC>
+Password: redes<nroPC>
+
+comandos:
+para descargar un archivo:
+- DIR: Ver archivos
+- GET <fileName>: Bajar un archivo llamado <fileName>
+
+a) Ir a capa de transporte de estos 3 paquetes y ver los flags (flag Syn, ack, etc)
+
+d) ip origen , ip destino y si es TCP o UDP.
+
+
+NOTA: Documentar = Screenshot y comentarios de la captura.
+
+
+RACK: Gabinete con equipos de red adentro (switches, patcheras, routers) ubicados en un datacenter (o el gesin we).
+
+Cableado Horizontal: No debe superar los 100 metros (buscar definicion despues gg)
+Diferencia con el cableado vertical en que
+
+switch de borde = primer switch con el que se conectaran las pcs
+
+todos los switches donde se conectan las pcs (de borde) se conectaran a otro switch mas arriba en la jerarquia
+
+
+
+LA aplicacion que se monte en el servidor tiene que trabajar en el puerto 80.
+

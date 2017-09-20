@@ -1,0 +1,294 @@
+
+
+Comprobacion de UDP - Capa 4
+
+Suma de comprobacion UDP
+
+Objectivo : Detectar "errores" (por ejemplo, bits alterados) en el segmento en transito.
+No es una comprobacion muy fiable.
+
+TCP
+- Caracteristicas-
+
+Punto a punto:
+Un emisor, un rceptor
+
+Flujo de bytes ordenado y fiable
+Sin "limite de mensajes"
+
+
+Estructura de TCP - Mas compleja que UDP
+
+numero de secuencia - ordenado
+banderas : transmision, ACK, etc
+
+***
+Preguntas:
+Como se llaman las 2 ventanas que hemos visto en estas clases.
+***
+
+# Numero de secuencia:
+"Numero" de corriente de bytes del primer byte en los datos del segmento.
+
+# Numero de ACK:
+- Numero de secuencia del siguiente byte que se espera del otro lado.
+- ACK acumulativo
+
+# TCP tiempo de ida y de vuelta RTT y tiempo limite de espera
+Como establecer el valor del tiempo limite de espera TCP?
+- mas largo que el RTT
+   Pero el RTT varia.
+- Demasiado corto: tiempo limite de espera prematuro
+  Retransmisiones innecesarias.
+- Demasiado Largo: reaccion lenta ante la perdida de un segmento.
+
+Como estimar el RTT?
+- MuestraRTT el tiempo medido de la transmision del segmento hasta que se recibe el ACK.
+  ignora transmisiones.
+MuestraRTT variará, necesidad de que el RTT estimado se "suavice".
+   Media de varias medidas recientes, no solo el MuestraRTT en curso.
+
+
+# Transferencia TCP de datos fiable.
+* TCP crea un servicio de transferencia fiable de datos sobre el servicio IP no fiable.
+* Segmentos entubados.
+* ACKs acumulativos.
+* TCP utiliza un unico temporizador de retransmision.
+
+Las retransmisiones se desencadenan por:
+  - los sucesos del tiepo limite de espera
+  - ACK duplicados.
+
+# Retransmision Rapida
+* Periodo de tiempo limite de espera suele ser relativamente
+
+# Control de flujo TCP
+Espacio que el receptor puede aceptar de informacion por cada envio mio para no saturarlo, porque si enviamos mas de la que podemos recibir se va a perder la informacion.
+
+* El lado receptor de la conexion TCP tiene un bufer receptor.
+
+# Control de la congestion:
+* Diferente del control de flujo
+* manifestaciones
+  - perdida de pquetes (buffers saturados)
+  - largos retarods ( por las colas en los buffers del router)
+ * Cuando la red esta saturada por alta carga de varias fuentes. Se pierden paquetes, trafico efectivo menor, aumenta dle retardo en destino, aumentan las retrasmisiones, causando por mas carga y mas congestion.
+
+# 2 tipos de congestion
+
+* Congestion Implicita: A partir de un calculo en la perdida de paquetes y retardos, se supone la congestion.
+
+* Congestion Explicita: Cuando no solo lo descubre el que envia paquetes sino porque los distintos elementos (nodos, conmutadores de la red) nos avisan que hay problemas en la red.
+Ejemplo protocolos WAN: X25.
+Los elementos nos avisan que hay problemas.
+El PDU tiene en estos casos un campo que nos comunica la congestion. <- importante
+
+
+# enfoques de control de congestion
+
+* entre extremos:
+- sin realimentacion explicita de la red (PDU sin campo especifico)
+
+* asistida por la red
+los routers proporcionan retroalimentacion a los extremos.
+
+# Calidad de servicio entre TCP/IP y ATM
+Resolver todos lso problemas que vienen derivados basicamente de la congestion.
+La forma de resolver la congestion es a traves de la calidad de servicios.
+
+El mejor y mas exigente es el CBR (Constant bit rate) y el mas barato y peor es el UBR.
+Ambos sirven para cosas diferentes y son usados de forma diferente.
+
+# Control congestion
+* Decremento multiplicativo
+Divide la ventanaCong a la mitad tras el evento de perdida.
+
+* Incremento Aditivo
+Aumenta la ventanaCong a 1 MSS (maximum segment size) cada RTT en ausencia de eventos de perdida de sondeo.
+
+* Arranque Lento TCP
+- Cuando la conexion comienza VentanaCong = 1MSS
+  Ejemplo: MSS = 500 bytes y RTT = 200mseg
+  Tasa inicial: 20 kbps
+- El ancho de banda disponible puede ser >> MSS/RTT
+  Es deseable un aumento rapido hasta que una tasa razonable.
+
+CUando la conexion comienza, la tasa aumenta exponencialmente rapido hasta que ocurre el primer evento de perdida.
+
+Pregunta: ¿CUando deberia variar el crecimiento exponencial a lineal?
+Resesta: cuando la VentanaCong se fija a la mitad de su valor antes del tienpo limite de espera.
+
+Refinamiento
+
+Implementacion:
+Umbral variable.
+En caso de evento de perdida, el umbral se fija a la mitad de la VentanaCong justo antes del evento de perdida.
+
+Capitulo 4: Red (capa 3)
+# 3 funciones importantes
+
+* determinacion del camino:
+establecer por donde, la ruta por donde va a pasar el trafico.Lo tomo sabiendo desde donde va hasta donde termina, esto lo define los algoritmos de enrutamiento.
+Salvedad:
+En la materia veremos 2 tipos de algoritmos o protocolos:
+- algoritmos enrutados: Ejemplo: IP
+
+- enrutamiento: los protocolos que en cada router (en la memoria) y definen la tabla de enrutamiento. Ejemplo: RIP
+
+* encaminamiento:
+Funcion qeu ocurre dentro del router entre las interfaces. Igual que el concepto de conmutacion. Va a conmutar desde una interfaz a la otra.
+Mueve paquetes desde la entrada del router hasta la salida apropiada del mismo.
+
+* establecimiento de la llamada
+Algunas arquitecturas de red requieren un establecimiento de la llamada a lo largo del camino antes de que fluyan los datos.
+
+# Circuitos Virtuales
+"El camino desde la fuente al destino actua mas como un circuito telefonico"
+- capacidad de actuacion
+- acciones de la red a lo largo del camino desde la fuente hasta el destino.
+
+
+- En virtuales la determinacion del camino se hace 1 vez.
+
+- En circuitos no virtales (datagramas) se hace por cada paquete.
+
+Establecimiento de llamda ,descarte de cada llamada antes de que que empiecen a fluir los datos.
+* cada paquete contiene un identificador de CV (no una identificacion de host de destino)
+
+* Cada router en camino desde la fuente al destino sostiene un "estado" para cada conexion que es difundida:
+  -  En la conexion de la capa de transporte solo intervienen 2 sistemas terminales.
+* El enlace, los recursos del router (ancho de banda, buffers) se asignaran al CV:
+- para conseguir una actuacion como la de un circuito.
+
+# Circuitos virtuales: protocolos de señalizacion:
+Asociados a los esquemas de telefonia.
+* se usan para establecer, sostener, descartar CV
+* se usan en atm, frame-relay y x.25
+* no se usan en el internet actual (trabajan basicamente con el esquema de conmutacion de circuitos, por lo tanto tienen 1 plano de informacion y otro de control, el de control son los protocolos de señalizacion)
+Van por canales (cables) separados.
+En contraste, en el area de datos, en el mismo PDU viene mezclada la informacion de ambos planos.
+
+# Redes de datagramas: el modelo de internet
+* sin establecimiento de llamada a la capa de red
+* routers: sin estado sobre conexiones de terminal a terminal:
+ - Sin concepto de nivel de red de "conexion"
+* Encaminamiento de paquetes usando una direccion de host de destino:
+- paquetes entre el mismo par de fuente y destino pueden tomar diferentes caminos.
+
+# Rutado o Enrutamiento
+Protocolo de rutado o enrutamiento
+Objetivo: determina el camino "correcto" (secuencia de routers) a traves de la red desde la fuente hasta el destino. (Algoritmos de Bellman-Ford y Dijkstra)
+
+Abstraccion del grafico para los algoritmos de rutado:
+- los nodos del grafico son routers.
+- los terminales del grafico son enlaces fisicos.
+
+Definiciones
+coste del enlace =  retraso,coste en dolares o nivel de congestion
+
+"camino correcto" = camino de coste minimo,el que aproveche la red desplegada,etc.
+
+Enrutamiento
+  -> Dinamico: la tabla de enrutamiento es modificada por un algoritmo.
+  -> Estatico: la tabla de enrutamiento es modificada por una persona. Agrega las metricas que desea en los enlaces, etc.
+
+# Clasificacion de los algoritmos de rutado
+- Centralizado / global
+todos los routers han completado la topologia, la informacion del coste del enlace.
+ALgoritmos de "estado de enlaces"
+OSPF
+Dijkstra
+Pro frecuencia
+
+
+- Descentralizado
+EL router conoce a los vecinos conectados con el fisicamente, lso costes del enlace con sus vecinos.
+Proceso iterativvo de calculo, intercambio de informacion con los vecinos.
+Algoritms de "vector de distancias"
+RIP,IGRP e EIGRP de Cisco
+Bellman-Ford
+Por evento/problema cuenta infinita -> solucion inversa envenenada
+
+* Estatica o dinamica
+Estatico : Las rutas cambian muy despacio a lo largo del tiempo
+
+Dinamico: las rutas cambian muy rapido
+- actualizacion periodica
+- en respuesta al cambio de coste de los enlaces.
+
+# La capa de red de Internet
+Funciones de la capa de red de host a router
+
+
+# Direccionamiento IP: Introduccion
+
+* DIreccion IP: identificador de 32 bits para el interfaz de host y router
+
+* Interfaz : Coneion entre el host/router y un enlace fisico.
+
+- normalmente los routers tienen varias interfaces
+- el host puede tener varias interfaces
+- las direcciones IP se asocian a cada interfaz
+
+Red     Host
+_______ _
+223.1.1.4
+
+
+Direccionamiento:
+* Plano (Capa 2)
+* Jerarquico <- IP (red-host) (Capa 4)
+
+Parcial conversion de decimal a bit y de bit a decimal.
+
+DIreccionamiento por clases
+Clase A - ninguna red muchos host
+Clase B - pocas redes muchos host
+Clase C - igual red iugal host
+Clase D - direccion de multidifusion(importante, averiguar)
+Clase E - (de experimentacion)
+
+DIreccionamiento
+- Publico
+
+- Privado
+
+Direccionamiento por clases
+- uso ineficaz del espacio de direccion, agotamiento del espacio de direccion.
+
+Direccionamiento sin clases : CIDR (Rutado interdominio sin clases=
+- porcion de red de la direccion de una longitud arbitraria.
+- formato de la direccion a.B.C.D/x, donde x es # bits en la porcion de red de la direccion
+
+# DIrecciones IP - Como obtener una?
+
+Codificada por la administracion del sistema en un archivo:
+Wintel: panel de control -> red -> configuracion -> TCP/IP -> Propiedades
+
+Unix:/etc/rc.Config
+
+* DHCP protocolo de configuracion dinamica de host: obtiene la direccion de un servidor dinamicamente
+- plug and play
+
+Como obtiene un ISP un bloque de direcciones?
+
+ICANN :  Corporacion de Internet para la Asignacion de Nombres y Numeros
+
+- Asigna direcciones
+- Gestiona DNS
+- Asigna nombres de dominio.
+
+PDU que trabaja en el nivel 3
+
+Datagrama IP
+
+- El datagrama permanece invariable, segun viaja desde la fuente al destino.
+- campos de direccion de interes aqui.
+
+PDUs importantes
+Mas importante de capa 4 puerto origen puerto destino
+Mas importante de capa 3 IP origen IP destino
+
+Una IP completatiene 2 partes: parte de red y parte de host.
+
+

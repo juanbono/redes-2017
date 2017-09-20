@@ -1,0 +1,122 @@
+
+
+23/06/17
+
+VLAN: Virtual LAN
+Es una LAN logica.
+
+Dominio de colision: dentro de un hub esta bien claro.
+Dispositivo que permite eliminar el dominio de colision: Bridge y Switch.
+Son dispositivos de capa 1.
+
+Que pasa si mando un paquete de broadcast: Emite el paquete a todos los demas hosts de la red.
+
+ARP: Tabla que tiene relacionadas las IP's con las MAC.
+
+Router: Dispositivo que Enruta paquetes entre 2 redes.
+
+Si tengo un switch conectado a otro switch y al mismo tiempo este a otro y ese a otro. Si emito un mensaje de broadcast se sobrecargaria el procesamiento qeu deben hacer los diferentes switch al haber tanta cantidad de hosts.
+
+Para solucionar el problema con el hub, dominio de difusion, (router capa 1) se agrega un switch (router capa 2).
+
+Para solucionar el problema con los switch (router capa 2) se agrega un router de IPs (router capa 3).
+
+Tengo un switch con 6 puertos, si separo los 6 en 3 VLANs, estoy creando 3 redes diferentes a nivel logico en un mismo dispositivo (fisico).
+
+Distintos tipos de VLAN:
+  - VLAN por puerto: Cuando en un switch digo: " estos puertos le designo una VLAN, a estos puertos esta VLAN, etc"
+    Hay 2 modos ACCESS y TRUNK.
+    Hay que crear la cantidad de VLANs que deseo, luego pararse en el puerto que quiero y decirle a cada puerto a QUE VLAN va a pertenecer.
+    Ademas tambien debo decirle en que MODO va a estar.
+
+Se puede ubicar todos los equipos en una misma VLAN aunque esten en distintos switches. Para ello tenemos que crear las mismas VLAN en tdos los switches y
+designar los puertos en todos los switches
+
+Cuando un puerto pertenece al modo TRUNK puede pasar mas de una VLAN.
+
+Protocolo 802.1Q.
+
+Diferencia entre ACCESS y TRUNK: COnfiguraciones del puerto
+  - En modo ACCESS un puerto pertenece a una UNICA VLAN
+  - En modo TRUNK un puerto permite ver mas de una unica VLAN (posiblemente todas, viene por default). Usa el protocolo 802.1Q.
+
+
+Tema del dominio de broadcast:
+
+Generar distintas VLANS y a cada VLAN generarle una subred.
+POr ejemplo en 1 switch generar VLAN1 y VLAN2, cada una con una subred.
+Luego tener un puerto de TRUNK conectado a otro switch que tenga el mismo esquema.
+Con esto se puede comunicar las pcs que estan en la misma VLAN y en la misma subred aunque esten en 2 switches distintos a nivel fisico.
+
+A su vez quiero que se comuniquen entre si 2 pcs que estan en distintas subredes y distintas VLAN.
+
+Para esto necesito un router (dispositivo de capa 3). Conecto ambos switch al router. Ambos switches poseen un puerto TRUNK que se comunicara con el router.
+
+======= version naive
+
+Entonces si desde una pc en la vlan 1 quiero mandarle un paquete a una pc en la vlan2.
+Lo envio al router, el router ve el label que dice vlan1 y lo cambia por vlan2.
+Esto se realiza a traves de los puertos TRUNK
+
+==============
+
+
+======== Version POSTA POSTA
+Al router en realidad no le importan las vlans, le importan unicamente las redes.
+El router cuando llega un paquete de la subred 1 y tiene que ir a la subred 2, hace el trabajo de enrutamiento normal (ya que el router enruta mediante redes).
+El tema es que en este caso se necesitarian muchas interfaces y seria economicamente inviable.
+Como solucion a esto existen las subinterfaces en los router.
+Por ejemplo Fa0/0.1 y Fa0/0.2 en vez de Fa0/0 (esta ultima queda en desuso)
+Para que el router pueda reconocer distintas VLANs necesito encapsular los paquetes con el
+protocolo 802.1Q.
+Entonces hay que especificar ademas de declarar la subinterfaz tambien hay qeu decirle que
+protocolo va a usar y la VLAN con la que va a trabajar.
+Fisicamente es un router conectado a puerto trunk.
+
+Enrutamiento entre VLANs.
+Necesito el switch donde creo las VLANS y un dispositivo de capa 3 (router).
+Entonces queda solucionado el problema de dominio de broadcast.
+Y ademas puedo comunicar todos los dispositivos de las distintas VLANs y subredes.
+
+Esto agrega confidencialidad, separo los hosts en distintas VLANs y no se pueden ver entre ellos.
+Esto agrega Flexibilidad, ya que la misma VLAN puede existir en distintos switches, por lo que puedo cambiarme de lugar fisicamente pero estar en la misma red. Es escalable.
+
+Esta solucion es muy buena para el tp integrador.
+
+
+TP 5
+====
+Armar VLANs para segmentar la red.
+las pcs van a estar : MODO ACCESS VLAN 10, MODO ACCESS VLAN 20 , etc
+Los puertos que esten conectados a los switch van a estar en modo TRUNK.
+
+Generar una vlan nativa:
+Ademas de las VLAN del switch va a ser necesario crear una vlan nativa (VLAN NATIVE) sirve para enviar ningun tipo
+de etiquetado. Es tipo un default gateway. Se usa para cuando habia equipos que no soportaban vlans, por lo que enviaban a traves
+de esa vlan nativa. Es necesaria que esa vlan sea la misma en todos los switch.
+configuracion: MODO TRUNK VLAN NATIVA <X>
+Si hago un ping entre maquinas de la misma vlan funciona.
+Son 3 switches.
+
+Cable derecho y cable cruzado
+=============================
+
+Cables UTP son par trenzado, cada uno de esos cablecitos tiene un color.
+Los cables UTP derecho mandan señales por alguno de esos cables.
+Los cables cruzado mandan por esos mismos pero del otro lado cambia la distribucion de los cables.
+
+Dispositivos de capa 1: Placa de red, HUB
+Dispositivos de capa 2: Switches, Bridges
+Dispositivos de capa 3: Routers.
+
+Para comunicar dispositivos de distintas capas se usan cables derechos.
+Para comunicar dispositivos de la misma capa se usan cables cruzados.
+
+
+
+
+
+
+
+
+

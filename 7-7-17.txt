@@ -1,0 +1,143 @@
+
+
+Redes de Informacion
+
+Clase del dia 07-07-17
+
+
+Capitulo 6: Redes inalambricas y moviles
+
+Vamos: 802.11, 802.15 y 802.16 de la IEEE 802
+
+¿Primero Inalambrica o Cableado?
+
+Primero se suele poner inalambrica para poder recolectar la informacion de la cantidad de conexiones necesarias (la demanda
+del servicio), y porque ademas es mas barato comparado con todo el cableado que puede suponer.
+POr lo que una vez identificada la demanda de red se puede proceder a colocar la red cableada.
+
+Elementos de uan red inalambrica
+
+Equipos y redes de acceso.
+
+Modo infraestructura: Red cableada de la que salen cables hacia puntos de acceso. Estos puntos de acceso tienen un area de
+cobertura de red wifi.
+
+
+Modo infraestructura: Estacion base conecta moviles a la red cableada.
+
+Handoff o handover: Movil cambia de estacion base que provee conectividad
+
+
+Domotica: protocolo zigbee
+
+Clasificacion de redes inalambricas
+
+Redes basadas en infraestructura y un unico salto:
+
+Redes sin infraestructura y un unico salto. No existe estacion base
+
+Redes basadas en infraestructura y multiples saltos (domotica)
+
+redes sin infraestructura y multiples saltos (para moviles y vehiculos).
+
+Caracteristicas de los enlaces:
+
+diferencias con los enlaces cableados:
+- potencia de la señal reducida: señales de radio se atenuan al propagarse (perdida del enlace)
+
+- interferencia de otras fuentes: frecuencias estandares de redes wireless (2.4 GHz) compartidas con otros
+  dispositivos (telefonos), otros como motores interfieren tambien.
+
+- propagacion multitrayectoria: señal de radio se refleja en objetos y tierra, llega a destino con diferencias de tiempo
+
+Caracteristicas de las redes inalambricas
+
+transmisores y receptores inalambricos multiples crean problemas adicionales (ademas de acceso multiple)
+
+IEEE 802.11 Wireless LAN
+- 802.11b
+
+- 802.11a
+
+- 802.11g
+
+802.15: redes de area personal (bluetooth)
+
+- menos de 10 m de diametro
+- reemplazo de cables (mouse, keyboard, headphones)
+- ad hoc: no infraestructura
+- maestro/esclavos
+  -esclavos requieren permiso para poder transmitir
+  - maestro concede permiso
+- 802.15 evoluciona de especificacion bluetooth
+  - banda de radio 2.4-2.5 Ghz
+  - hasta 721 kbps
+
+Control de acceso a los medios
+
+DCF (funcion de coordinacion distribuida)
+- mecanismo de control de acceso distribuido
+- control centalizado opcional
+
+La subcapa MAC inferior es la funcion de coordinacion distribuida (DCF):
+- algoritmo de contencion para proporcionar acceso a la totalidad del trafico
+- trafico asincrono
+
+PCF (funcion de coordinacion pubtual)
+- Algoritmo MAC centralizado
+- Libre de contencion
+- Se ubica justo por encima de DCF
+
+Espacio entre tramas:
+Retardo simple denominado espacio entre tramas (IFS interframe space)
+Usando un IFS, las reglas de acceso CSMA son: .....
+
+para asegurar la confiabilidad se utiliza una espera exponencial
+
+Prioridad (IFS)
+Se utiliza 3 valores para el IFS
+- SIFS (IFS corto, short IFS)
+  * IFS mas pequeño
+  * se utiliza para todas las acciones de respuesta inmediatas, tal y como se explica mas adelante
+- PIFS (IFS de la funcion de coordinacion puntual, "point cordination function IFS")
+  * IFS de tamaño medio
+  * Utilizado por el controlador central en el esquema PCF cuando emite un sondeo
+- DIFS (IFS de la funcion de coordinacion distribuida)
+  * IFS mas grande
+  * Se usa para sincronizacion en distribuida.
+
+Uso de SIFS - CTS (en los 3 modos, se usa SIFS)
+Permiso para enviar (CTS) una estacion puede asegurar que s utrama de datos se enviara si primero emite una pequeña
+trama de solicitud para enviar (RTS)
+  - La estacion a quien va dirigidala trama RTS deberia responder inmediatamente con una trama CTS  si se encuentra preparada
+    para recibir
+  - EL resto de estaciones reciben la trama RTS y se abstienen de usar el medio.
+
+Respuesta a sondeo: vease la discusion sobre PCF
+
+
+SuperTrama:
+
+- El coordinador puntual puede hacerse con el control opcionalmente y emitir sondeos
+- se define un intervalo conocido como supertrama
+- Al principio de una supertrama , el coordinador puntual puede hacerse con el control opcionalmente y emitir sondeos durante un periodo de tiempo dado.
+
+- El tiempo restante de la supertrama queda disponible para el acceso competitivo
+
+802.11 Canales y Asociacion
+-802.11b espectro dividido en 11 canales de frecuencias diferentes.
+  - administrador de AP elige frecuencia (canal)
+  - Posible interferencia: canal puede ser el mismo al del ap vecino
+- Host deben asociarse con AP
+  - rastrea canales escuchando por trama beacon que contiene el nombre del AP (SSID) (Service Set Identifier) y dir MAC
+  - Selecciona AP al cual asociarse
+  - Puede efectuar autentificacion (99 WEP / 03 WPA / 04 WPA2) [PSK=AES y TKIP]
+- Tipicamente corre DHCP para obtener IP en la subred del AP
+
+Trama 802.11 direccionamiento: PREGUNTA DE EXAMEEEEN
+
+4 MACs posibles que se usan para cosas distintas:
+Address 4: modo ad hoc
+Address 3: Dir mac de interfaz del router al cual el AP esta conectado
+Address 2: Dir MAC del host wireless o AP transmisor de trama (propia)
+Address 1: Dir MAC del host wireless o AP receptor de trama (destino)

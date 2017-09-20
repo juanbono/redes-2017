@@ -1,0 +1,237 @@
+
+Clase del dia 18-8-17
+=====================
+
+Correccion del primer parcial:
+
+Punto 10b)
+Congestion Implicita:
+  - Es la congestion que se deduce.
+  - En el PDU de TCP no hay campo que se dedique a la congestion.
+
+Congestion Explicita
+  - La congestion esta en el PDU
+  - Frame Relay usa 3 paquetes (congestion hacia adelante, hacia atras y que
+    descartar en caso de congestion).
+
+Punto 6) Tabla de enrutamiento
+Son de Capa 3, necesita 3 campos:
+  - IP de la red de destino
+  - Interfaz por la cual derivara el trafico para esa IP
+  - La metrica de ese enlace
+
+  Metrica: Costo asociado a un enlace entre los nodos de una red.
+
+  Caracteristicas por las que deberia elegir:
+    - El tamaño de la red (Por que RIP es hasta 15 saltos y OSPF es para redes grandes)
+    - Seguridad: RIP esta todo en plano y OSPF no.
+    - Jerarquia: OSPF usa jerarquias y RIP no.
+
+Punto 7) Clases de difusion:
+  Diferencias entre dominio de colision y de broadcast:
+    - Diferentes capas (2 y 3).
+    - La colision se da cuando es en un mismo segmento de red.
+    - El broadcast se da en una red completa.
+
+  Cual es la caracteristica del dominio de colision que lo puede convertir en un problema: Los equipos servidores deben funcionar a mayor velocidad que los clientes.
+
+segmento de red: cuando la transmision se produce como si fuera a traves de un conmutador de capa 1 (hub).
+  
+Servicio mas exigente: - Llamada telefonica:
+                         porque debe mantener la conexion en amos extremos.
+                       - Netflix
+                       - Chat Texto
+                       - Drive
+
+Tema del dia:
+Seguridad (No esta en el libro)
+
+Politica de seguridad informatica:
+
+¿Cual es la informacion mas valiosa que manejamos?
+ - La informacion asociada a nuestras clientes
+ - a las ventas
+ - al personal
+ - productos
+ - operaciones
+
+Riesgos:
+
+- La empresa necesita contar con informacion sobre la cual tomar decisiones a los efectos de establecer controles necesarios y eficaces.
+
+Que se debe asegurar?
+
+- La informacion debe considerarse como un activo importante para satisfacer objetivos.
+
+- Al igual que el resto de activos organizacionales, debe asegurarse y estar protegida.
+
+* Contra que se debe proteger la informacion?
+- Las buenas practicas en Seguridad de la Informacion, protegen a esta contra una amplia gama de amenazas, tanto de orden fortuito (destruccion parcial o total por incendio, inundaciones, eventos electricos y otros) como de orden deliberado, tal como fraude, espionaje, sabotaje, vandalismo, etc.
+
+Amenazas
+
+* Naturales
+  - Incendios, terremotos, inundaciones
+* Humanas
+  - Maliciosas
+    + Internas
+    + Externas
+  - No maliciosas
+    + Impericia
+
+Diferencia entre vulnerabilidad y amenaza:
+
+Una vulnerabilidad es una debilidad en un activo.
+
+Una amenaza es una violacion potencial de la seguridad. 
+
+No es necesario que la violacion ocurra para que la amenaza exista.
+
+Las amenazas "explotan" vulnerabilidades.
+
+Son 2 cosas independientes.
+
+
+Vulnerabilidades Comunes:
+
+- Inadecuado compromiso de la direccion.
+- Persona inadecuadamente capacitado y concientizado.
+- Inadecuada asignacion de responsabilidades.
+- Ausencia de politicas.
+- Ausencia de controles.
+  + fisicos/logicos.
+  + disuasivos/preventivos/detectivos/correctivos.
+- Ausencia de reportes de incidentes y vulnerabilidades.
+- Inadecuado seguimiento y monitoreo de los controles.
+
+Activos
+- La informacion es un activo que como otros activos importantes tiene valor y requiere en consecuencia una proteccion adecuada.
+
+- La informacion puede estar en diferentes formatos.
+
+Es importante saber el valor de la informacion, para poder establecer medidas
+para salvaguardarlas siempre y cuando no supere el valor de la informacion.
+
+Por cada activo tendremos un propietario, un salvaguarda, las vulnerabilidades que tiene, los riesgos que enfrento y la valoracion.
+
+Como establecer los requisitos de seguridad:
+
+Es esencial que la organizacion identifique sus requisitos de seguridad.
+
+Existen 3 fuentes principales
+
+La primer fuente procede de la valoracion de los riesgos de la Organizacion.
+Con ella:
+ - Se identifican las amenazas a los activos.
+ - Se evalua la vulnerabilidad y la probabilidad de ocurrencia
+ - Se estima su posible impacto.
+
+La segunda fuente es el conjunt ode reuqisitos legales, estatutarios, regulatorios y contractuales que debe satisfacer:
+ - La organizacion
+ - Sus socios comerciales
+
+La tercera fuente esta formada por los principios, objetivos y equisitos de la organizacion
+
+ISO/IEC 17799:2005
+
+11 areas de control
+- Politica de seguridad
+- organizacion de la seguridad de la informacion
+- gestion de activos
+- seguridad den los RRHH
+- seguridad fisica y del entorno
+- gestion de comunicaciones y operaciones
+- control de accesos
+- adquisicion, desarrollo y mantenimiento de sistemas de informacion
+- gestion de incidentes de seguridad
+- gestion de continuidad del negocio
+- conformidad
+
+Preguntas de examen:
+- Amenaza, vulnerabilidad, cuales son los activos
+
+- Como hacer los inventarios
+- Pasos que hay que seguir para controlar el riesgo de los activos
+
+SGSI
+- El sistema de gestion de la seguridad de la informacion (SGSI) es la parte del sistema de gestion de la empresa, basado en un enfoque de riesgos del negocio, para:
+
+- Establecer
+- Implementar
+- Operar
+- Monitorear
+- Mantener y mejorar la seguridad de la informacion
+
+Incluye:
+Estructura, politicas, actividades, responsabilidades, practicas, procedimientos, procesos y recursos
+
+
+
+
+
+Hacer -> Verificar -> Actuar -> Planificar -> Hacer ...
+
+
+¿ Que es una politica?
+- Conjunto de orientaciones o directrices que rigen la actuacion de una persona o entidad en un asunto o campo determinado.
+¿Que es una politica de seguridad?
+Conjunto de directrices que permiten resguardar los activos de informacion.
+
+Como debe ser una politica de seguridad?
+
+Politica de la seguridad de la informacion:
+
+- Aumento de los niveles de seguridad en las organizaciones
+
+La implementacion de una PSI, le permite a las organizaciones cumplir con la gestion efectiva de los recursos de informacion criticos e instalar y administrar los mecanismos de proteccion adecuados, determinando que conductas son permitidas y cuales no.
+
+Esto redundara en una efectiva reduccion de los niveles de riesgo y de las vulnerabilidades, lo cual en definitiva, se traduce en ahorro de tiempo y dinero, genera mayor confianza y un fortalecimiento de la imagen institucional.
+
+
+Seguridad en la red
+
+Pilares de la seguridad (SI O SI DEBEN ESTAR LOS 5)
+(Importante)
+Confidencialidad: unicamene el emisor y receptor deseado deben "entender" el contenido del mensaje
+- emisor encripta el mensaje
+- receptor desencripta el mensaje
+
+Autenticacion: Emisor y receptor quiere confirmar la identidad de cada uno.
+
+Integridad del mensaje: emisor y receptor quieren estar mas seguros de que el contenido de sus comunicaciones no es alterado (durante la transmision o despues) sin deteccion.
+
+Disponibilidad y acceso:Los servicios deben ser accesibles y deben estar disponibles para los usuarios
+
+No repudio: registro e involucramiento (unir mensaje y emisor, receptor)
+
+
+
+Hay muchos chicos malos por ahi!
+
+P: ¿¡Que puede hacer un CHICO MALO? !?
+R: ¡Muchas cosas! Jijiji
+
+
+* Escuchar a escondidas: interceptar mensajes
+
+* Insertar activamente mensajes en la conexion
+
+* Suplantacion puede falsear la direccion fuente en el paquete (o cualquier campo en el paquete)
+
+* suplantacion: puede falsear la direccion fuente en el paquete (o cualquier campo en el paquete)
+
+* secuestro: "apoderarse" de la conexion entrante eliminando al receptor o al emisor e insertandose el en su lugar
+
+* denegacion del servicio: impedir que el servicio sea utilizado por otros (ejemplo: sobrecargando recursos)
+
+Criptografia
+
+Criptografia de clave simetrica:
+Claves emisor y receptor identicas
+
+Criptografia de clave pubica:
+Encriptacion de clave publica, desencriptacion de clave secreta (privada)
+
+Cifrado de sustitucion: sustituir una cosa por otra.
+Cifrado monoalfabetico: sustituye una letra de alfabeto por otra.
+

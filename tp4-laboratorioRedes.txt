@@ -1,0 +1,51 @@
+
+
+TP laboratorio de redes - 16/06/17
+
+- Aplicacion
+- Transporte
+- Red
+- Enlace
+- Fisico
+
+Vamos a ver Frame Relay - Encapsulamiento de capa de Enlace
+
+- Linea dedicada: Un cable que va directo de un router a otro router.
+- Conmutacion de Circuito: Se comparte pero no se puede usar si mas de uno la usa al mismo tiempo.
+- Conmutacion de paquetes: Utilizar un mismo canal y compartirlo. Se puede trabajar en paralelo.
+
+Frame Relay -> Conmutacion de Paquetes.
+
+Si bien hablamos de paquetes, en realidad son tramas (porque son de la capa de enlace).
+
+El servicio de frame relay usualmente se terceriza, es un servicio que ofrecen los isp muchas veces.
+
+Hoy en dia hay uso masivo de fibra optica, pero antes se usaba PSTN (enlace de telefonia).
+
+
+Se establece un circuito virtual (PVC - permanent virtual circuit).
+
+DLCI: Identificador que tiene el circuito virtual dentro de un frame relay.
+Son valores numericos.
+
+Comandos del router:
+
+En packet tracer: switch frame relay.
+
+Configurar todos los routers y configurar switch frame relay.
+
+vamo a trabajah con enrutamiento dinamico.
+
+vamos a usar RIP (protocolo de enrutamiento dinamico)
+
+En RIP v1 se usaba clases y en RIP v2 se usa CIDR
+
+En el router: (packet tracer, enable, config term)
+- router rip
+- network idRed
+ejemplo:
+network 192.168.10.0
+network 10.0.0.0
+
+todo esto para poder compartir la tabla de enrutamiento.
+

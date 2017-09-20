@@ -1,0 +1,175 @@
+
+
+9/6/17
+
+La clase pasada vimos:
+
+IP
+MSK
+DNS
+Gateway
+
+Router: Conmutador de capa 3
+Computadora / dispositivo que enruta paquetes de una ruta a otra
+
+Dentro del router se encuentra una memoria ROM y una memoria flash.
+La memoria flash es volatil, se pierde al apagarse.
+La rom se utiliza para almacenar el firmware y el sistema operativo.
+firmware: es el software que va a admistrar el hardware.
+
+IOS: Sistema operativo del router.
+
+NVRAM: Permite guardar una memoria flash en una memoria estatica.
+
+Un router tiene interfaces.
+Por ejemplo ethernet, serial, fibra, etc.
+Las interfaces son medios fisicos/placas para comunicarse con el router.
+
+
+Interfaz Serial:
+Sirve para conectar 2 routers con un cable serial.
+Sirve para conectar un enlace WAN.
+Sirve para intercambiar paquetes wan y ram (pero para LAN se usa ethernet)
+Para WAN se usa fibra y serial (mas viejo pero mas barato).
+
+DSU/CSU: Modem que establece una comunicacion punto a punto.
+
+Los routers son los que se denominan DTE y los CSU/DSU son los DCE.
+
+Los CSU/DSU Determinan la velocidad del enlace serie.
+
+DCE = Data communication equipment.
+DTE = Data Terminal Equipment.
+
+router <-> dsu/csu <------> dsu/csu <-> router
+DTE <-> DCE <---> DCE <-> DTE
+
+Si no uso DCEs uno de los routers debe actuar como DCE y establecer el clockrate.
+
+Para hacer eso necesito un cable especial que tiene que ser DCE.
+
+DCE = Hembra
+DTE = Macho
+
+Terminal: Donde tiramos los comandos del router.
+En windows: Hyperterminal.
+
+Para conectarse al router:
+Necesitas cable Console, BRIX, etc.
+
+Router tienen 2 modos:
+
+Modo Usuario y modo privilegiado.
+
+comando enable -> para pasar al modo privilegiado.
+
+Configuraciones que permite cambiar el modo privilegiado:
+- hostname
+- interfaces
+
+para configurar algo:
+configure terminal
+
+para cambiar hostname: poner hostname <hostname>
+
+comando para configurar interfaces
+
+interface serial 1
+
+Que parametros podemos establecer:
+
+- direccion ip: ip address <IP> <Mask>
+- activar la interfaz: no shutdown
+- desactivar la interfaz: shutdown
+
+ejemplos:
+interface ethernet 3
+interface serial 2/2 (si hay 2 filas de interfaces)
+
+Enrutamiento:
+Necesito una tabla de enrutamiento.
+
+Estatico:
+manual
+Dinamico:
+automatica
+
+
+Por salto:
+
+Por estado del enlace:
+
+
+
+enable
+config term
+ip route <identificador de red> <mascara> <interfaz>
+
+ip route sirve para agregar una ip a mi tabla de enrutamiento
+
+ejemplo:
+
+ip route 192.168.2.0 255.255.255.0 serial 0
+ip route 192.168.2.0 255.255.255.0 serial 0
+ip route 192.168.3.0 255.255.255.0 serial 0
+
+las wan tienen que tener ip de la misma red.
+
+ip route 10.0.0.0 255.0.0.0 serial 0
+
+Topologia de tipo anillo siempre se configuran en un sentido, sentido horario o antihorario.
+
+Cuando una interfaz es serie, hay que decidir si funciona como DCE.
+Si funciona como DCE va a necesitar un clockrate.
+
+para configurar la interfaz:
+comandos:
+
+conf term
+interface s0
+ip address 11.0.0.1 255.0.0.0
+clockrate <velocidad en bit/s> (ejemplo 56000 o 64000)
+no shutdown
+
+clockrate solo para interfaces serie.
+
+En ethernet solo se necesita configurar y activar (no clockrate)
+
+
+
+TP:
+Minimo cada router debe tener 2 placas serial.
+
+cable de pc a switch (ethernet)
+de switch a router (ethernet)
+
+Primero tildar la que hace de DCE y luego la de DTE.
+
+en la pc - IP , default gateway, mascara
+router - todas las direcciones ip de todas las interfaces
+
+1er prueba:
+si hago un ping desde la pc hasta la puerta de enlace deberia funcionar.
+
+Como hacerlo? Parte de desktop, command prompt y tirar un ping
+
+2da Prueba:
+Me paro en la terminal del router y hago un ping a otro router directamente coneconectado.
+
+desde el modo privilegiado:
+show ip route
+muestra toda la tabla de enrutado.
+
+no ip route route <identificador> <mascara> <
+
+
+running-config
+
+startup-config
+
+para salvar la conf de running a startup
+copy running-config startup-config
+
+abreviado
+
+copy run start

@@ -1,0 +1,125 @@
+
+Clase de redes de 25/08/17
+
+DES: Estandar de Encriptacion de Datos
+
+Estander de Encriptacion de EE UU,
+
+Clave simetrica de 56 bits, entrada de texto plano de 64 bits.
+
+Que seguridad tiene DES?
+  - Desafio DES: Frase encriptada de clave de 56 bits.
+  - No se
+
+- Hacer DES mas seguro
+  + Usar 3 veces DES.
+
+AES: Estandar de Encriptacion Avanzada
+* Procesa datos en bloques de 128 datos.
+* Claves de 128, 192 o 256 bits.
+* Desencriptacion por fuerza bruta (prueba cada clave) que emplea 1 segundo
+  DES y 149 billones de años para AES.
+
+Criptografia de clave simetrica
+- Requiere emisor, receptor conozca la clave secreta compartida.
+P: ¿Como ponerse de acuerdo en la clave, especialmente si nunca se han visto?
+R: Con un KDC
+
+KDC:
+- Genera un canal seguro en donde cada uno de los participantes se van a autenticar. En ese canal seguro, se les provee a ambos de una clave temporal, y alli se puede pasar la clave simetrica.
+
+Criptografia de Clave Publica (RSA)
+- Enfoque distinto
+- Emisor y receptor no comparten clave secreta.
+- Clave de encritpacion publica conocida por todos
+- Clave de desencriptacion privada, conocida solo por el receptor
+
+
+Firma Digital (Autenticacion):
+Tecnica criptografica análoga a las firmas hechas a mano.
+- Emisor (Roberto) firma digitalmente un documento y establece que es su
+  propietario/creador.
+- Verificable, no falsificable: Destinatario (Alicia) puede demostrarle a
+  alguien que Roberto, y no otra persona (incluida Alicia), ha firmado el
+  documento.
+                      (Integridad)   (Autenticidad)
+agarra el documento ->    hash    -> encriptacion (RSA) -> Receptor
+
+Funcion de Hash:
+Caracteristicas:
+* Es importante notar que el conjunto imagen de la funcion de hash debe ser
+  de menor tamaño que el conjunto dominio.
+  Es decir, no existe función inversa para la funcion de hash. No se puede recuperar x de hash(x) a traves de una función.
+* Puede ocurrir el caso donde para 2 cadenas distintas, s1 y s2, hash(s1) == hash(s2). Es decir, hay colisiones. Esto es consecuencia de que el conjunto imagen sea mas pequeño que el conjunto dominio.
+* Se usa para verificar la integridad del archivo.
+  Ejemplos:
+    + Verificar que una descarga de internet no fue modificada con contenido malicioso.
+    + Verificar que un archivo se descargo correctamente de internet.
+    + Para contraseñas.
+    + Para filtros de spam. Utilizando una función de hash adecuada, se la puede utilizar para filtrar correo electronico.
+* Funciones conocidas:
+- MD5 funcion de dispersion ampliamente utilizada (RFC 1321)
+  + Calcula un resumen de mensaje de 128 bits en un proceso de 4 pasos.
+  + Cadena x arbitraria de 128-bit, resulta dificil construir el mensaje cuya
+    dispersion MD5 sea igual a x
+- SHA-1
+  + Estandar estadounidense.
+  + Resumen de mensaje de 160 bits.
+f
+Problema de manejo de claves:
+
+(Simetrico) Solucion: Centro de distribucion de claves (KDC) actua como intermediario entre entidades.
+
+(Asimetrico) Solucion: CA
+
+KDC:
+- Genera un canal seguro en donde cada uno de los participantes se van a autenticar. En ese canal seguro, se les provee a ambos de una clave temporal, y alli se puede pasar la clave simetrica.
+
+CA:
+Autoridad de certificacion: Vincula clave publica a una entidad particular, E.
+
+E (persona, router) registra su clave publica con CA:
+  - Proporciona "prueba de identidad" a CA.
+  - CA crea certificado que vincula a E a su clave publica.
+  - Certificado que contiene la clave publica de E  firmada digitalmente por CA.
+    CA dice "Esta es la clave publica de E"
+
+Ataques:
+
+Husmear paquetes
+Falsificacion IP
+Denegacion de Servicio
+
+Encriptacion de Enlace
++ IPsec (Capa 3)
++ SSL (Capa 4)
+
+El mas seguro es IPsec (Capa 3)
+
+Capa de sockets seguros (SSL)
+
+* seguridad en la capa de transporte a cualquier aplicacion basada en TCP.
+Utilizando servicios SSL.
+
+* Utilizada entre navegadores de Internet, servidores de comercio electronico (shttp)
+* servicios de seguridad:
+ - Autenticacion de servidor.
+ - Encriptacion de datos.
+ - Autenticacion de cliente (opcional)
+
+* Autenticacion de servidor:
+- El navegador con capacidades SSL incluye claves publicas de autoridades de certificacion de confianza.
+- El navegador solicita el certifcado del servidor, emitido por las autoridades de certificacion de confianza.
+-
+
+IPSec
+- Confidencilidad en la capa de red
+  * Al enviar el host los datos se encriptan en un datagrama IP.
+  * Segmentos TCP y UDP; mensajes ICMP y SNMP
+- Autenticacion de la capa de red:
+  * El host de destino puede autenticar la direccion IP origen.
+- Dos protocolos principales
+  * Protocolo de autenticacion de cabecera (AH)
+  * Protocolo de encapsulacion segura de la carga (ESP)
+...
+

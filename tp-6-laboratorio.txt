@@ -1,0 +1,76 @@
+
+
+11/8/2017
+
+Trabajo Practico de Redes N° 6: Redes inalambricas
+
+WLAN
+
+Estandar   Velocidad  Frecuencia
+802.11 B   11 Mbps    2.4 Ghz
+802.11 A   54 Mbps    5 Ghz
+802.11 G   54 Mbps    2.4 Ghz
+802.11 N   300 Mbps   2.4 Ghz
+802.11 AC  1300 Mbps  5 Ghz
+802.11 AD  4,6 Gbps   60 Ghz
+
+- 802.11
+- Wifi
+- WEP: Wired Equivalent Privacy
+- WPA: Wi-Fi Protected Access
+- WPA2: Wi-Fi Protected Access 2
+- PSK: Public Shared Key
+
+Dispositivos para conectarnos a una WLAN:
+
+- Access Point:
+    Transforma una señal cableada a una inalambrica y genera un SSID.
+- Repetidor
+    Retransmite una señal.
+- Routercito Wireless
+  + Enruta una LAN (mi casa) con Internet (WLAN).
+  + Access Point
+  + DHCP: IPs dinamicas
+  + NAT: Unica IP publica
+  + Firewall:
+  + Access List: Permitir conexiones a distintos sitios
+  + QoS: Dar distintas prioridades a sitios/conexiones.
+  + DDNS: Dynamic DNS
+- Placa de red
+
+TP:
+===
+Punto 1: Modo infraestructura
+
+Pongo la IP del router en el browser
+Me logueo con user: admin; password: admin
+
+creo una red wifi con alguno de estos ssid:
+- LRITP06A|F CH1/2
+- LRITP06B|G CH6/7
+- LRITP06C|H CH11/12
+
+192.168.3.X
+192.168.4.X
+192.168.5.X
+
+-> WPA 2 PSK (la que nosotros queramos)
+
+-> Conexion infraestructura: Cuando tengo un AP o un routercito estableciendo el acceso a la WLAN.
+
+Documentamos desde la Notebook el SSID, el tipo de encriptacion, canal con el que esta trabajando. Desde la linea de comando con el comando: netsh wlan show all
+
+filtro MAC permit all
+
+-> DHCP
+
+
+Punto 2: Modo Ad-Hoc
+
+Conectarse sin routercito ni AP.
+buscar como crear red ad-hoc.
+Documentar cada uno de los comandos.
+Luego tirar el comando: netsh wlan show all
+
+Desde linea de comandos:
+  * 

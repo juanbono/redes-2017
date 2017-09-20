@@ -1,0 +1,249 @@
+
+Clase del dia 14 de Julio de 2017
+
+Redes Multimedia:
+
+Aplicaciones Multimedia:
+redes de audio y video ("medios continuos")
+
+Calidad de Servicio: <def>
+
+
+Aplicaciones de redes multimedia
+
+Tipos de aplicaciones mltimedia
+
+1Traminsion de audio y video almacenado
+2- transmision en directo de audio y video
+3- Audio y video interactivo en tiempo real.
+
+Fluctuacion: es la variabilidad en los retardos de los paquetes en la misma transmisio de pquetes
+
+Caracteristicas fundamentales:
+* Normalmente sensibles a los retardos:
+ - retardos entre extremos
+ - fluctuacion de retardo
+
+* Pero tolerantes a la perdida:
+  perdidas infrecuentes provocan fallos menores
+
+* antitesis de los datos que son intolerantes a la perdida, pero tolerantes al retardo.
+
+Aplicaciones:
+Telefonia IP, videoconferencias, distribucion por mundos interactivos
+
+* requerimientos del retardo entre extremos
+- Audio < 150 mseg bien, < 400 msec OK
+  - incluye nivel de aplicaicon y retardos de red
+  - mayores retardos perceptibles, interactividad reducida
+
+* inicializacion de sesion
+- ¿ Puede anunciar un receptor de la llamada su direccion IP ,numero de puerto y algoritmos codificados?
+
+Multimedia en el internet de hoy dia
+
+TCP/UDP/IP: "servicio de maximo rendimiento"
+
+* Sin garantias de retardo o perdida.
+
+Pero dijimos que las aplicaciones multimedia requieren calidad de servicio y un nivel de rendimiento para ser efectivas
+
+Las aplicaciiones multimedia del internet de hoy en dia utilizan tecnicas de nivel de aplicacion para mitigar (lo mejor posible) los efectos del retardo y perdida.
+
+Todos los servicios multimedia usan udp, excepto en los casos en los que hay un proxy controlando la conexion, que utilizan TCP para poder saltar los controles del proxy, pero esto lo hace la aplicacion.
+
+Unas pocas palabras sobre la compresion de audio
+
+- señal analoga muestreada a una tasa constante_
+  - telefono: 8000 muestra/seg
+  - cd de musica: 44.100 muestra/seg
+
+- Cada muestra es cuantizada, es decir, perfeccionada:
+  - por ejemplo, 2⁸ = 256 posibles valores cuantizados.
+
+- cada valor cuantizado se representa por bits:
+  - 8 bits por cada 256 valores
+
+- Ejemplo 8000 muestras/seg, 256 valores cuantizados ---> 64000 bps
+
+- El receptor lo convierte de vuelta en una señal analoga:
+  - Algo de reduccion de calidad
+
+Ejemplo de tasas:
+  - CD: 1411 Mbps
+  - MP3: 96, 128, 160 kbps
+  - Telefonia de Internet: 5,3 - 13 kbps
+
+Compresion de video
+
+- Un video es una secuencia de imagenes descargadas a una tasa constante:
+  - Por ejemplo, 24 imagenes/seg
+
+- La imagen digital es un array de piexels
+
+- redundancia
+  - espacial
+  - temporal
+
+Mejora de la calidad de servicio en las redes IP
+
+- Aqui "aprovechando el maximo beneficio / aprovechamiento"
+- Futuro "Internet de nueva generacion con garantias de calidad de servicio"
+
+* RSVP: Señalando reservas de recursos.
+* Servicios diferenciados: garantias diferenciales
+* Servicios integrados
+
+- Modelo simple de estudios de comparticion y congestion.
+
+Principio de las grantias de calidad de servicio
++ Ejemplo: telefono IP 1Mbps, enlace compartido FTP 1,5 Mbps.
+  - Erupciones de FTP pueden congestionar el router, causando perdida de audio.
+  - Quiere darle prioridad al audio sobre FTP.
+
+Principio 1:
+La marcacion de paquertes es necesario para que el router distinta entre los diferentes tipos y el nuevo sistema de router para tratar los paquetes convenientemente
+
+Principio 2: Proteccion o aislamiento de las distintas clases
+
+Principio 3: Mientras se proporciona aislamiento , es desable utilizar recursos lo mas eficientemente posible
+
+Los paquetes para la transferencia tienen que ser grandes o chiquitos?
+Tienen que ser chiquitos para perder menos datos, si fueran grandes (al usar UDP) si los perdemos nuestros sentidos notarian la degradacion en la calidad del servicio.
+
+Principio 4: Admision de llamadas: El flujo declara sus necesidades y la red puede bloquear la llamada (por ejemplo, si hay una
+señal ocupada) si no puedo ecnontrar las necesidades.
+
+Mecanismos para la planificacion y vigilancia
+
+* Planificaicon: eleccion del siguiente paquete que hay que enviar por el enlace
+
+- FIFO
+- Prioridad (fair queueing) Transmite el paquete en la cola con mayor prioridad.
+- Round Robin
+- WFQ (Weighted fair queueing) Espera equitativa ponderada
+
+Mecanismos de vigilancia
+Objetivo: Limitar el trafico para no exceder los parametros declarados.
+
+Los 3 criterios mas usados normalmente:
+
+* (Largo plazo) Tasa media: Cuantos paquetes pueden enviarse por unidad de tiempo (a la larga).
+  - Asunto crucial: cual es la longitud del intervalo? 100 paquetes por segundo o 6000 por minuto tienen la misma tasa!!!
+
+* Tasa pico: Por ejemplo, media de 6000 paquetes por minuto (ppm); 1500ppm tasa pico.
+
+* (Maximo) Tamaño del impulso: numero maximo de paquetes enviados consecutivamente (Sin que intervenga ninguna fluctuacion)
+
+Preguta de parcial y final: Seguro seguro CALIDAD DE SERVICIO. Mecanismos de vigilancia y planificacion, los 4 principios.
+
+* cubeta de marcas: limita las entradas especificas a la tasa media y al tamaño del impulso especificado.
+
+* La cubeta puede contener b marcas.
+* Las marcas se generan a la tasa r marcas / segundo a menos que la cubeta este llena.
+
+* Durante un intervalo de longitud t: el numro de paquetes admitidos es menor o igual a (r t + b)
+
+* Cubetas de marcas y colas justas con el peso (WFQ) se combinan para proporcionar los limites garantizados superiores sobre el retardo,
+ es decir LA CALIDAD DEL SERVICIO ESTA GARANTIZADA
+
+Servicios integrados IETF
+
+* La arquitectura para proporcionar garantias de calidad de servicio en redes IP para sesion de aplicaicon individual.
+
+* Reserva de recursos: los routers mantienen la informacion estatica (como los circuitos virtuales) de los recursos establecidos,
+solicitudes de calidad de servicio.
+
+* Admision/denegacion de las nuevas solicitudes para el establecimiento de la llamada.
+
+Pregunta: ¿ El flujo que acaba de llegar podria ser admitido con garantias de recursos auqneu los flujos previamente admitidos,
+no tengan garantias de calidad e servicio no violadas?
+
+La sesion de llegada tiene que:
+* declarar sus requerimientos de calidad de servicio
+  r-spec: define la calidad de servicio solicitada.
+* caracterizar el trafico que enviara a la red:
+  t-spec: define las caracteristicas del trafico.
+*Protocolo de señalizacion: necesario para llevar el R-spec y T-spec a los routers (donde requiere la reserva).
+  - RSVP
+
+IntServ
+
+Servicio Garantizado:
+- Peor caso de la llegada de trafico: fuente vigilada de cubeta agujereada.
+
+- Limite simple (matematicamente probable) sobre el retardo.
+
+* Servicio de carga controlado:
+Una calidad de servicio muy aproximada a la cadlidad de servicio que el mismo flujo podria recibir de un elemento de red sin cargar.
+
+* Servicios diferenciados IETF
+Asuntos relacionados con IntServ
+- Escalabilidad: Señalizacion, manteniendo el estado del router por flujo, lo cual es dificil con un gran numero de flujos.
+- Modelos de servicios flexibles: intserv solo tiene dos clases. Tambien necesita clases de servicio cualitativas.
+
+- "Se comporta como un cable"
+- Distincion de servicio relativa: platinum, oro, plata.
+
+Aproximacion a los servicios diferenciados:
+- Funciones simples en el nucleo de la red, funciones relativamente complejas al limite de los routers (o los hosts).
+- No define las clases de servicio, sino que proporciona los componentes funcionales para construir las clases de servicio.
+
+Opciones (IETF) calidad de servicio
+
+* sobredimensionar best effort
+
+* reservar a priori (IntServ)
+
+* Priorizar servicios y/o usuarios (DiffServ)
+
+Arquitectura de servicios diferenciados: (nomenclatura de de servicios diff)
+Router de extremo:
+- Gestion de trafico por flujo.
+- las marcas de los paquetes son en el perfil o fuera del perfil
+
+Router del nucleo:
+- gestion del trafico por clase
+- almacenamiento en bufer y planificacion
+basado en la marcacion en el extremo
+- la preferencia la tienen los paquetes en el perfil
+- contestacion asegurada.
+
+Clasificacion y condicionamiento
+
+* el paquete esta marcado con el TipoDe Servicio (TOS) en IPv4, y la clase de trafico en IPv6
+
+* 6 bits se usan para el punto de codigos diferenciados (DSCP) y determinan el phb que el paquete va a recibir
+
+Seria deseable limitar la tasa de inyeccion de trafico de algunas clases:
+* el usuario declara el perfil de trafico (por ejemplo, la tasa)
+
+Envio (PHB)
+* PHB tiene como resultado un comportamiento de actuacion de envio observable (medible) de diferente manera
+
+* El PHB no especifica que mecanismos utiliza para asegurar el comportamiento de actuacion de PHB
+
+Envio expedito: la tasa de salida de paquetes iguala o excede la tasa especifada
+
+Envio asegurado: cuatro clases de trafico.
+- cada una tiene una cantidad de ancho de banda minima garantizada
+cada una tiene 3 particiones preferenciales de ses
+
+
+Redes multimedia: resumen.
+Aplicaciones y requerimientos multimedia
+* aprovechar el maximo el servicio de hoy en dia de maximo aprovechamiento
+* mecanismos de planificaicon y vigilancia
+* la nueva gneneracion de internet: servicios integrados, rsvp, servicios diferenciados
+
+
+
+
+Pregunta de examen:
+
+1- Cual es la diferencia entre servicio integrado y servicio diferenciado?
+Uno es un sistema rustico, porque no tiene la complejidad del otro. Entonces resuelve los problemas de forma muy simple. Mientras
+que el otro es muy complejo, haciendo a uno caro y a otro barato.
+
+
+2- 

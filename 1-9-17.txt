@@ -1,0 +1,36 @@
+
+Clase laboratorio de Redes 1-9-17
+
+QoS
+
+Diff Serv (Servicios diferenciales)
+Conjunto de herramientas que me van a garantizar la calidad del servicio sobre un enlace.
+
+Dentro de estas caracteristicas utiliza el paquete IP y lo modifica: Usa un campo llamado ToS (8 bits) y lo transforma en DSCP, que utiliza los 6 bits mas significativos de los 8 originales.
+La caracteristica de Diff Serv es el marcado de paquetes.
+
+Marcado de paquetes: Dentro de lo que es el trafico entrante marco los paquetes para transformar ToS en DSCP (actua como identificador).
+
+Con el marcado DSCP filtro/clasifico cada paquete llegante segun si es FTP, HTTP, TELNET, etc.
+
+Gestion de trafico y gestion de cola:
+Ordeno los paquetes marcados para decidir quien sale primero.
+
+Cola Prioridad Alta: HTTP (DSCP 32), no me fijo ya en el protocolo sino en el campo DSCP (TOS). Por ejemplo: los de prioridad alta son los de dscp 32.
+
+Cola Prioridad Media: (DSCP 30)
+
+Cola de prioridad baja: (DSCP 18)
+
+Todo esto se aplica cuando voy a tener un problema, porque si no tengo problemas pasan todos. El QoS actua en las situaciones conflictivas -> gestion de cola.
+
+DSCP 000000 = paquete que no tiene gestion de trafico ni de cola.
+
+1- Clasificar y marcar los paquetes. en router (modo configuracion)
+class-map <nombre> para definir la clase.
+2- Definir contra que va a matchear esta clase:
+match <protocolo|ACL|DSCP>
+3- Una vez que ya los clasifique los debo marcar.
+
+jitter: tiempo promedio entre 2 paquetes del mismo tipo (TELNET, HTTP, etc)
+
