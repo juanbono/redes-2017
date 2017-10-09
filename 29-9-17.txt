@@ -1,0 +1,143 @@
+
+Clase del 29 de Septiembre del 2017.
+
+* En 1996 la ITU-T introdujo el M.3010 TMN (Telecommunications Management Network)
+* En 1997 el M.3400  que introdujo FCAPS.
+
+* FCAPS de la ISO es el acronimo de fault, configuration, accounting, performance  security.
+
+El FCAPS va mas alla de la red, va al negocio.
+
+* BML: business management layer
+* SML: service
+* NML: network (SNMP)
+* EML: Element
+* NEL: Network element layer
+
+En el libro, 9.2
+
+* Fault Management.
+* Configuration
+* Accounting
+* perfomance
+* security
+
+Gestion de Redes (Cappitulo 8) kurose rose
+
+
+Entorno de gestion de red de internet
+
+* MIB: base de inforacion de gestion
+* SMI: lenguaje de definicion de datos
+* SNMPOP: protocolo de gestion de redes
+* seguridad y administracion
+
+* Servicio de presentacion: ASN.1 (Abstract Syntax Notation 1)
+Notacion sintactica Abstracat
+
+Que es la gestion de red?
+
+"La gestion de redes incluye el desarrollo, la integracion y la coordinacion del hardware, software y del elemento humano para monitorizar, cuestionar. configurar,analizar,evaluar y controlar la red y los recursos elementales para suplir los requisitos de tiempo real, da capacidad operativa y de calidad de servicio a un precio razonable." Saydam
+
+El dispositivo gestionado contiene objetos gestionados cuyos datos se reunen en la base de informacion de gestion (MIB).
+
+
+Vale la pena encriptar en una gestion de red donde controlamos el sistema autonomo? No porque controlamos todo el sistema, entonces no tiene sentido encriptar.
+
+En cambio, cuando no controlamos los sistemas autonomos si conviene encriptar debido a que podrian modificarnos los paquetes de gestion y darnos informacion falsa. Por eso se encripta. Ejemplo whatsapp.
+
+
+Estandares de gestion de red:
+
+CMIP de OSI:
+
+* protocolo de informacion de gestion corriente.
+
+* diseñado en los años 80 : el estandar de gestion para la unificacion de la rd
+
+* estandarizado muy lentamento
+
+* SNMP (buscar en el libro)
+
+
+SNMP: 4 partes
+
+* Base de informacion de gestion (MIB)
+- Almacenamiento de informacion distribuida de datos de gestion de redes.
+
+* estructura de la informacion de gestion (SMI)
+Lenguaje de definicion de datos para objetos MIB
+
+SMI: Lenguaje de definicion de datos:
+
+
+Nombramiento SNMP
+
+arbol de identificacion de objetos ISO
+Nombramiento jerarquico de todos los objetos.
+Cada punto de bifurcacion tiene un nombre y un numero.
+
+consultar: www.alvestrand.no/harald/objectid/top.html
+
+
+Protocolo SNMP
+
+Dos formas de transportar información MIB, comandos:
+
+modo peticion respuesta
+Entidad gestora -----solicitud----> agente Datos
+                <----respuesta-----
+
+Modo trampa
+
+Entidad gestora -----mensaje trampa--> agente Datos
+
+
+Nota: El protocolo SNMP no entra en el parcial.
+
+Seguridad y administracion de SNMP
+
+* encriptacion: DES encripta el mensaje SNMP.
+
+* Autentificacion: calcula, envia un MIC(m,k):
+calcula la dispersion sobre el mensaje (m) y la clave secreta compartida (k)
+
+
+Soluciones potenciales al problema de presentacion:
+
+1- el emisor aprende el formato del receptor. el emisor traduce al formato del receptor. el emisor envia.
+
+* analogia al mundo real.
+
+
+ASN.1 : Notadion de sintaxis abstracta 1
+
+Estandar de la ISO X.680
+* usada de forma extensa en Internet
+
+Tipos de datos definidios: constructores de objetos como el SMI
+
+BER: reglas basicas de codificacion
+* especifican como transmitir objetos de datos definidos por el ASN.1
+
+cada objet tiene un tipo longitud valor (TLV) para codificar
+
+Codificacion TLV
+Idea: los dats transmitidos son autoidentificativos.
+
+T: tipo de datos, uno de los tipos definidios por ASN.1
+L: longitud de datos en bytes
+V: valor de los datos codificados por ASN.1
+
+Gestion de redes: resumen:
+
+Gestion de redes:
+Extremadamente importante: 80% de "coste" de redes.
+ASN.1 para la descripcion de datos.
+Protocolo SNMP como herramienta para entregar informacion.
+
+Gestion de redes: mas arte que ciencia.
+*¿que medir/monitorizar?
+*¿como responder a los fallos?
+*¿correlacion/filtrado de alarma?
+
